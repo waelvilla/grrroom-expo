@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
+import MenuButton from '../components/MenuButton'
+
 
 export default class Home extends Component {
     render() {
         return (
             <View style={styles.container} >
+                <MenuButton navigation={this.props.navigation} />
                 <View style={styles.logoContainer}>
                     <Image
                         style={styles.logo}
