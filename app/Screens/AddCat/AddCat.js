@@ -11,7 +11,8 @@ export default class AddCat extends Component {
         this.state = {
             textValue: "",
             catImg: null,
-            newCat: null
+            newCat: null,
+            image: null
         }
     }
     onChangeText(value) {
@@ -29,7 +30,7 @@ export default class AddCat extends Component {
             })
         if (!result.cancelled){
             this.setState({
-                catImg: {uri: result}
+                image: result.uri
             })
         }
         console.log(result.uri);
@@ -39,8 +40,9 @@ export default class AddCat extends Component {
         console.log("---render---");
         console.log("Cat Img: "+ this.state.catImg);
         
-        let localCatImg=this.state.catImg? this.state.catImg : require('../../../assets/plus1.png')
+        let {catImg}=this.state.catImg? this.state : require('../../../assets/plus1.png')
         let catStyle=this.state.catImg? null : styles.plus
+        let {image} = this.state
         return (
             <View style={styles.container} >
                 <MenuButton navigation={this.props.navigation} />
@@ -83,7 +85,7 @@ export default class AddCat extends Component {
                     <View>
                         <Text>Add Photo</Text>
                         <TouchableOpacity style={styles.imgField} onPress={() => {this.onPressImg()}}>
-                            <Image style={catStyle} source={localCatImg} />
+                            {image && <Image style={catStyle} source={{uri:image}} />}
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity
