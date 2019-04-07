@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import MenuButton from '../components/MenuButton'
 
 
@@ -14,7 +14,10 @@ export default class Home extends Component {
                         source={require('../../assets/logo100.png')} />
                 </View>
                 <Text style={styles.welcome}> Welcome to Grrroom! </Text>
-                <TouchableOpacity style={styles.btnContainer}>
+                <TouchableOpacity 
+                  style={styles.btnContainer}
+                  onPress={()=>{this.props.navigation.navigate("AddCat")}}
+                  >
                     <Text style={styles.btnText}>Add a Cat!</Text>
                 </TouchableOpacity>
             </View>
