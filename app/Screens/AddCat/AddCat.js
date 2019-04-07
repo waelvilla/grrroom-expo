@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity } from 'react-native';
 import { ImagePicker } from 'expo'
 
-import MenuButton from '../components/MenuButton'
+import MenuButton from '../../components/MenuButton'
 
 
 export default class AddCat extends Component {
@@ -10,7 +10,8 @@ export default class AddCat extends Component {
         super()
         this.state = {
             textValue: "",
-            catImg: require('../../assets/plus1.png'),
+            catImg: null,
+            newCat: null
         }
     }
     onChangeText(value) {
@@ -21,12 +22,25 @@ export default class AddCat extends Component {
     onSubmitField() {
 
     }
-    onPressImg() {
-        ImagePicker.launchImageLibraryAsync({ mediaTypes: 'Images', allowsEditing: true })
-
+    onPressImg=async ()=> {
+        let result=await ImagePicker.launchImageLibraryAsync(
+            { mediaTypes: 'Images',
+             allowsEditing: true 
+            })
+        if (!result.cancelled){
+            this.setState({
+                catImg: {uri: result}
+            })
+        }
+        console.log(result.uri);
+        
     }
     render() {
-
+        console.log("---render---");
+        console.log("Cat Img: "+ this.state.catImg);
+        
+        let localCatImg=this.state.catImg? this.state.catImg : require('../../../assets/plus1.png')
+        let catStyle=this.state.catImg? null : styles.plus
         return (
             <View style={styles.container} >
                 <MenuButton navigation={this.props.navigation} />
@@ -64,18 +78,18 @@ export default class AddCat extends Component {
                             value={this.state.textValue}
                             onChangeText={(value) => this.onChangeText(value)}
                             onSubmitEditing={this.onSubmitField}
-
                         />
                     </View>
                     <View>
                         <Text>Add Photo</Text>
-                        <TouchableOpacity style={styles.imgField} onPress={() => { this.onPressImg() }}>
-                            <Image style={styles.plus} source={this.state.catImg} />
+                        <TouchableOpacity style={styles.imgField} onPress={() => {this.onPressImg()}}>
+                            <Image style={catStyle} source={localCatImg} />
                         </TouchableOpacity>
                     </View>
-
                     <TouchableOpacity
                         style={styles.btnContainer}
+                        onPress={()=>{this.props.navigation.navigate("AllCats")}}
+                        newCat={this.state.newCat}
                     >
                         <Text style={styles.btnText}>Add Cat</Text>
                     </TouchableOpacity>
@@ -116,7 +130,6 @@ const styles = StyleSheet.create({
     imgField: {
         width: 100,
         height: 100,
-        // paddingBottom: 10,
         backgroundColor: 'white',
         borderWidth: 1,
         borderColor: 'black',

@@ -3,10 +3,13 @@ import {Platform, Dimensions} from 'react-native'
 import {createDrawerNavigator, createAppContainer} from 'react-navigation'
 import MenuDrawer from '../navigation/MenuDrawer'
 
+//screens
 import Home from '../Screens/Home'
 import AddAppointment from '../Screens/AddAppointment'
 import ReportProblem from '../Screens/ReportProblem'
-import AddCat from '../Screens/AddCat'
+import AddCat from '../Screens/AddCat/AddCat'
+import AllCats from '../Screens/AddCat/AllCats'
+
 const WIDTH = Dimensions.get('window').width
 
 const DrawerConfig= {
@@ -29,6 +32,9 @@ const DrawerNavigator= createDrawerNavigator({
     },
     ReportProblem: {
         screen: ReportProblem
+    },
+    AllCats: {
+        screen: AllCats
     }
 },
 DrawerConfig)
